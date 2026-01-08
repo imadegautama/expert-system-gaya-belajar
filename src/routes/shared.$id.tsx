@@ -190,7 +190,7 @@ function SavedResultPage() {
           Hasil Analisis
         </h1>
         <p className="text-[hsl(var(--muted-foreground))]">
-          Hasil diagnosa gaya belajar {result.userName}
+          Hasil analisis gaya belajar {result.userName}
         </p>
       </div>
 
