@@ -25,3 +25,8 @@ dist-ssr
 
 seed_questions.sql
 SPECS.md
+
+# Environment variables
+.env
+.env.local
+.env.production
