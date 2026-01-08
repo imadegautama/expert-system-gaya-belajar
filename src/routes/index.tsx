@@ -213,7 +213,7 @@ function HomePage() {
           <CardContent className="pt-6">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
               <BookOpen className="h-4 w-4" />
-              Sumber Terpercaya
+              Sumber
             </h3>
             <div className="space-y-4 text-xs text-[hsl(var(--muted-foreground))]">
               <div className="flex flex-col gap-1">
