@@ -1,6 +1,6 @@
 export interface QuestionOption {
   label: string;
-  type: "V" | "A" | "K";
+  type: "V" | "A" | "R" | "K";
 }
 export interface Question {
   id: number;
@@ -9,11 +9,11 @@ export interface Question {
   created_at: string;
 }
 
-export type AnswerType = "V" | "A" | "K";
+export type AnswerType = "V" | "A" | "R" | "K";
 
 export interface InferenceResult {
-  rawScores: { V: number; A: number; K: number };
-  percentages: { V: number; A: number; K: number };
+  rawScores: { V: number; A: number; R: number; K: number };
+  percentages: { V: number; A: number; R: number; K: number };
   dominant: string;
   description: string;
 }
@@ -23,6 +23,7 @@ export interface Result {
   user_name: string;
   score_visual: number;
   score_auditory: number;
+  score_readwrite: number;
   score_kinesthetic: number;
   dominant_style: string;
   created_at?: string;

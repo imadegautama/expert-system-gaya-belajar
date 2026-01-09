@@ -16,6 +16,7 @@ import {
   Eye,
   Ear,
   Hand,
+  FileText,
   Lightbulb,
   Share2,
   Home,
@@ -26,9 +27,10 @@ import {
 import { useState, useEffect } from "react";
 
 const DESCRIPTIONS: Record<string, string> = {
-  V: "Anda adalah pembelajar Visual. Anda memahami informasi lebih baik melalui gambar, diagram, dan grafik. Tips: Gunakan mind map, highlighter warna-warni, dan video pembelajaran.",
-  A: "Anda adalah pembelajar Auditory. Anda lebih mudah menyerap informasi melalui pendengaran dan diskusi. Tips: Dengarkan podcast, diskusi kelompok, dan rekam materi untuk didengar ulang.",
-  K: "Anda adalah pembelajar Kinesthetic. Anda belajar paling efektif melalui praktik langsung dan aktivitas fisik. Tips: Buat proyek, lakukan eksperimen, dan jangan duduk diam saat belajar.",
+  V: "Anda adalah pembelajar Visual. Anda memahami informasi lebih baik melalui gambar, diagram, grafik, dan peta. Tips: Gunakan mind map, highlighter warna-warni, video pembelajaran, dan infografis.",
+  A: "Anda adalah pembelajar Aural/Auditory. Anda lebih mudah menyerap informasi melalui pendengaran dan diskusi. Tips: Dengarkan podcast, ikuti diskusi kelompok, dan rekam materi untuk didengar ulang.",
+  R: "Anda adalah pembelajar Read/Write. Anda belajar paling efektif melalui membaca teks dan menulis catatan. Tips: Buat catatan tertulis, baca buku dan artikel, buat daftar poin-poin penting, dan tulis ulang materi dengan kata-kata sendiri.",
+  K: "Anda adalah pembelajar Kinesthetic. Anda belajar paling efektif melalui praktik langsung dan aktivitas fisik. Tips: Buat proyek, lakukan eksperimen, gunakan simulasi, dan jangan duduk diam saat belajar.",
   Multimodal:
     "Anda memiliki gaya belajar Multimodal (Campuran). Anda fleksibel menggunakan berbagai metode belajar. Tips: Kombinasikan berbagai metode sesuai topik yang dipelajari.",
 };
@@ -48,7 +50,10 @@ export const Route = createFileRoute("/shared/$id")({
     }
 
     const totalScore =
-      data.score_visual + data.score_auditory + data.score_kinesthetic;
+      data.score_visual +
+      data.score_auditory +
+      (data.score_readwrite || 0) +
+      data.score_kinesthetic;
 
     const result: InferenceResult & { id: number; userName: string } = {
       id: data.id,
@@ -56,6 +61,7 @@ export const Route = createFileRoute("/shared/$id")({
       rawScores: {
         V: data.score_visual,
         A: data.score_auditory,
+        R: data.score_readwrite || 0,
         K: data.score_kinesthetic,
       },
       percentages: {
@@ -66,6 +72,10 @@ export const Route = createFileRoute("/shared/$id")({
         A:
           totalScore > 0
             ? Math.round((data.score_auditory / totalScore) * 100)
+            : 0,
+        R:
+          totalScore > 0
+            ? Math.round(((data.score_readwrite || 0) / totalScore) * 100)
             : 0,
         K:
           totalScore > 0
@@ -111,6 +121,7 @@ function SavedResultPage() {
   const [animatedProgress, setAnimatedProgress] = useState({
     V: 0,
     A: 0,
+    R: 0,
     K: 0,
   });
   const [copied, setCopied] = useState(false);
@@ -146,6 +157,8 @@ function SavedResultPage() {
         return <Eye className="h-8 w-8" />;
       case "A":
         return <Ear className="h-8 w-8" />;
+      case "R":
+        return <FileText className="h-8 w-8" />;
       case "K":
         return <Hand className="h-8 w-8" />;
       default:
@@ -165,12 +178,21 @@ function SavedResultPage() {
     },
     {
       type: "A",
-      label: "Auditory",
+      label: "Aural/Auditory",
       icon: Ear,
       color: "hsl(280, 65%, 60%)",
       bgColor: "hsl(280, 65%, 60%)",
       score: result.rawScores.A,
       percentage: animatedProgress.A,
+    },
+    {
+      type: "R",
+      label: "Read/Write",
+      icon: FileText,
+      color: "hsl(35, 80%, 50%)",
+      bgColor: "hsl(35, 80%, 50%)",
+      score: result.rawScores.R,
+      percentage: animatedProgress.R,
     },
     {
       type: "K",
@@ -269,7 +291,10 @@ function SavedResultPage() {
               />
               <p className="text-xs text-[hsl(var(--muted-foreground))]">
                 {item.score} dari{" "}
-                {result.rawScores.V + result.rawScores.A + result.rawScores.K}{" "}
+                {result.rawScores.V +
+                  result.rawScores.A +
+                  result.rawScores.R +
+                  result.rawScores.K}{" "}
                 pertanyaan
               </p>
             </div>

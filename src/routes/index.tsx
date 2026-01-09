@@ -16,8 +16,8 @@ import {
   Eye,
   Ear,
   Hand,
-  Info,
   FileText,
+  Info,
   ExternalLink,
 } from "lucide-react";
 
@@ -95,7 +95,7 @@ function HomePage() {
       </Card>
 
       {/* Learning Style Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-3xl mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full max-w-4xl mb-4">
         <div className="flex items-center gap-3 p-4 rounded-xl bg-[hsl(var(--secondary))]/50 border border-[hsl(var(--border))]">
           <div className="p-2 rounded-lg bg-[hsl(220,70%,50%)]/20">
             <Eye className="h-5 w-5 text-[hsl(220,70%,50%)]" />
@@ -113,10 +113,23 @@ function HomePage() {
           </div>
           <div>
             <p className="font-medium text-[hsl(var(--foreground))]">
-              Auditory
+              Aural/Auditory
             </p>
             <p className="text-xs text-[hsl(var(--muted-foreground))]">
               Belajar dengan mendengar
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 p-4 rounded-xl bg-[hsl(var(--secondary))]/50 border border-[hsl(var(--border))]">
+          <div className="p-2 rounded-lg bg-[hsl(35,80%,50%)]/20">
+            <FileText className="h-5 w-5 text-[hsl(35,80%,50%)]" />
+          </div>
+          <div>
+            <p className="font-medium text-[hsl(var(--foreground))]">
+              Read/Write
+            </p>
+            <p className="text-xs text-[hsl(var(--muted-foreground))]">
+              Belajar dengan membaca
             </p>
           </div>
         </div>

@@ -13,21 +13,23 @@ export interface GeminiResponse {
 
 export async function generateLearningRecommendations(
   dominantStyle: string,
-  percentages: { V: number; A: number; K: number }
+  percentages: { V: number; A: number; R: number; K: number }
 ): Promise<GeminiResponse> {
   const styleLabels: Record<string, string> = {
     V: "Visual",
-    A: "Auditory",
+    A: "Aural/Auditory",
+    R: "Read/Write",
     K: "Kinesthetic",
     Multimodal: "Multimodal (Campuran)",
   };
 
-  const prompt = `Kamu adalah seorang ahli pendidikan dan psikologi belajar. Berdasarkan hasil tes gaya belajar berikut, berikan rekomendasi belajar yang personal dan praktis dalam Bahasa Indonesia.
+  const prompt = `Kamu adalah seorang ahli pendidikan dan psikologi belajar. Berdasarkan hasil tes gaya belajar VARK (Visual, Aural, Read/Write, Kinesthetic) berikut, berikan rekomendasi belajar yang personal dan praktis dalam Bahasa Indonesia.
 
-Hasil Tes Gaya Belajar:
+Hasil Tes Gaya Belajar VARK:
 - Gaya Belajar Dominan: ${styleLabels[dominantStyle] || dominantStyle}
 - Persentase Visual: ${percentages.V}%
-- Persentase Auditory: ${percentages.A}%
+- Persentase Aural/Auditory: ${percentages.A}%
+- Persentase Read/Write: ${percentages.R}%
 - Persentase Kinesthetic: ${percentages.K}%
 
 Berikan rekomendasi dalam format markdown berikut (gunakan emoji untuk setiap section):

@@ -19,6 +19,7 @@ import {
   Eye,
   Ear,
   Hand,
+  FileText,
   Lightbulb,
   Share2,
   Check,
@@ -40,6 +41,7 @@ function ResultPage() {
   const [animatedProgress, setAnimatedProgress] = useState({
     V: 0,
     A: 0,
+    R: 0,
     K: 0,
   });
   const [copied, setCopied] = useState(false);
@@ -112,6 +114,8 @@ function ResultPage() {
         return <Eye className="h-8 w-8" />;
       case "A":
         return <Ear className="h-8 w-8" />;
+      case "R":
+        return <FileText className="h-8 w-8" />;
       case "K":
         return <Hand className="h-8 w-8" />;
       default:
@@ -131,12 +135,21 @@ function ResultPage() {
     },
     {
       type: "A",
-      label: "Auditory",
+      label: "Aural/Auditory",
       icon: Ear,
       color: "hsl(280, 65%, 60%)",
       bgColor: "hsl(280, 65%, 60%)",
       score: result.rawScores.A,
       percentage: animatedProgress.A,
+    },
+    {
+      type: "R",
+      label: "Read/Write",
+      icon: FileText,
+      color: "hsl(35, 80%, 50%)",
+      bgColor: "hsl(35, 80%, 50%)",
+      score: result.rawScores.R,
+      percentage: animatedProgress.R,
     },
     {
       type: "K",
@@ -238,7 +251,10 @@ function ResultPage() {
               />
               <p className="text-xs text-[hsl(var(--muted-foreground))]">
                 {item.score} dari{" "}
-                {result.rawScores.V + result.rawScores.A + result.rawScores.K}{" "}
+                {result.rawScores.V +
+                  result.rawScores.A +
+                  result.rawScores.R +
+                  result.rawScores.K}{" "}
                 pertanyaan
               </p>
             </div>

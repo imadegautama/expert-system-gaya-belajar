@@ -25,6 +25,9 @@ dist-ssr
 
 seed_questions.sql
 SPECS.md
+LAPORAN_PROYEK_SISTEM_PAKAR.md
+migration_add_readwrite.sql
+seed_vark.sql
 
 # Environment variables
 .env

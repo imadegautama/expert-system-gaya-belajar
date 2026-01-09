@@ -12,7 +12,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { ArrowRight, Loader2, AlertCircle, Eye, Ear, Hand } from "lucide-react";
+import {
+  ArrowRight,
+  Loader2,
+  AlertCircle,
+  Eye,
+  Ear,
+  Hand,
+  FileText,
+} from "lucide-react";
 
 // Sample questions for fallback if Supabase is not configured
 const sampleQuestions: Question[] = [
@@ -22,6 +30,7 @@ const sampleQuestions: Question[] = [
     options: [
       { label: "Melihat peta atau diagram", type: "V" },
       { label: "Mendengar penjelasan lisan", type: "A" },
+      { label: "Membaca instruksi tertulis langkah demi langkah", type: "R" },
       { label: "Diantar langsung ke tempat tujuan", type: "K" },
     ],
     created_at: "",
@@ -30,8 +39,9 @@ const sampleQuestions: Question[] = [
     id: 2,
     text: "Ketika belajar materi baru, Anda lebih mudah memahami dengan:",
     options: [
-      { label: "Membaca buku dengan gambar dan diagram", type: "V" },
+      { label: "Melihat gambar, diagram, atau video", type: "V" },
       { label: "Mendengarkan penjelasan guru atau podcast", type: "A" },
+      { label: "Membaca buku teks atau artikel", type: "R" },
       { label: "Langsung mencoba praktiknya", type: "K" },
     ],
     created_at: "",
@@ -42,6 +52,7 @@ const sampleQuestions: Question[] = [
     options: [
       { label: "Melihat desain dan tampilannya", type: "V" },
       { label: "Bertanya pendapat teman atau sales", type: "A" },
+      { label: "Membaca review dan spesifikasi tertulis", type: "R" },
       { label: "Mencoba langsung di toko", type: "K" },
     ],
     created_at: "",
@@ -52,6 +63,7 @@ const sampleQuestions: Question[] = [
     options: [
       { label: "Melihat video tutorial memasak", type: "V" },
       { label: "Mendengarkan instruksi dari seseorang", type: "A" },
+      { label: "Membaca resep tertulis dengan detail", type: "R" },
       { label: "Langsung mencoba memasak sambil belajar", type: "K" },
     ],
     created_at: "",
@@ -62,6 +74,7 @@ const sampleQuestions: Question[] = [
     options: [
       { label: "Wajah dan penampilan orang tersebut", type: "V" },
       { label: "Nama dan suara orang tersebut", type: "A" },
+      { label: "Apa yang sudah Anda tulis tentang mereka", type: "R" },
       { label: "Pengalaman yang pernah Anda alami bersama", type: "K" },
     ],
     created_at: "",
@@ -75,6 +88,7 @@ const sampleQuestions: Question[] = [
         label: "Banyak penjelasan lisan tanpa terlalu banyak slide",
         type: "A",
       },
+      { label: "Handout dengan poin-poin tertulis untuk audiens", type: "R" },
       { label: "Demonstrasi atau contoh langsung", type: "K" },
     ],
     created_at: "",
@@ -88,6 +102,7 @@ const sampleQuestions: Question[] = [
         label: "Menelepon teman atau customer service untuk bertanya",
         type: "A",
       },
+      { label: "Mencari panduan tertulis atau forum diskusi", type: "R" },
       { label: "Mencoba-coba sendiri sampai berhasil", type: "K" },
     ],
     created_at: "",
@@ -98,6 +113,7 @@ const sampleQuestions: Question[] = [
     options: [
       { label: "Ada presentasi visual atau whiteboard", type: "V" },
       { label: "Diskusi dan brainstorming lisan", type: "A" },
+      { label: "Ada agenda dan notulen tertulis", type: "R" },
       { label: "Workshop atau aktivitas hands-on", type: "K" },
     ],
     created_at: "",
@@ -106,8 +122,12 @@ const sampleQuestions: Question[] = [
     id: 9,
     text: "Ketika menunggu giliran, Anda cenderung:",
     options: [
-      { label: "Melihat-lihat sekeliling atau membaca", type: "V" },
-      { label: "Berbicara atau mendengarkan musik", type: "A" },
+      { label: "Melihat-lihat sekeliling atau browsing gambar", type: "V" },
+      {
+        label: "Berbicara dengan orang lain atau mendengarkan musik",
+        type: "A",
+      },
+      { label: "Membaca buku, artikel, atau media sosial", type: "R" },
       {
         label: "Bergerak-gerak atau bermain dengan benda di sekitar",
         type: "K",
@@ -121,6 +141,7 @@ const sampleQuestions: Question[] = [
     options: [
       { label: "Tempat dengan pemandangan indah untuk difoto", type: "V" },
       { label: "Tempat dengan musik dan budaya lokal yang menarik", type: "A" },
+      { label: "Membaca guidebook dan itinerary detail", type: "R" },
       {
         label: "Tempat dengan aktivitas petualangan seperti hiking atau diving",
         type: "K",
@@ -134,6 +155,7 @@ const sampleQuestions: Question[] = [
     options: [
       { label: "Menghafal dengan flashcard atau gambar", type: "V" },
       { label: "Mendengarkan percakapan dan menirukan", type: "A" },
+      { label: "Membaca teks dan menulis kosakata", type: "R" },
       { label: "Langsung berbicara dengan penutur asli", type: "K" },
     ],
     created_at: "",
@@ -144,6 +166,7 @@ const sampleQuestions: Question[] = [
     options: [
       { label: "Tampilan dan warna yang menarik", type: "V" },
       { label: "Rekomendasi dari teman atau sales", type: "A" },
+      { label: "Membaca label bahan dan cara perawatan", type: "R" },
       { label: "Kenyamanan saat dipakai", type: "K" },
     ],
     created_at: "",
@@ -157,6 +180,7 @@ const sampleQuestions: Question[] = [
         label: "Berbicara dengan seseorang atau mendengarkan musik",
         type: "A",
       },
+      { label: "Menulis jurnal atau membuat daftar solusi", type: "R" },
       { label: "Berjalan-jalan atau melakukan aktivitas fisik", type: "K" },
     ],
     created_at: "",
@@ -167,6 +191,7 @@ const sampleQuestions: Question[] = [
     options: [
       { label: "Menggambar atau menunjukkan gambar", type: "V" },
       { label: "Menjelaskan dengan kata-kata secara verbal", type: "A" },
+      { label: "Menuliskan poin-poin dan memberikan catatan", type: "R" },
       { label: "Memperagakan atau mendemonstrasikan", type: "K" },
     ],
     created_at: "",
@@ -175,9 +200,21 @@ const sampleQuestions: Question[] = [
     id: 15,
     text: "Ketika mempelajari software atau aplikasi baru, Anda akan:",
     options: [
-      { label: "Membaca manual dengan screenshot", type: "V" },
+      { label: "Melihat video tutorial dengan visual", type: "V" },
       { label: "Meminta seseorang menjelaskan cara menggunakannya", type: "A" },
+      { label: "Membaca dokumentasi atau panduan pengguna", type: "R" },
       { label: "Langsung mencoba-coba fiturnya", type: "K" },
+    ],
+    created_at: "",
+  },
+  {
+    id: 16,
+    text: "Saat menghadiri kuliah atau seminar, Anda lebih suka:",
+    options: [
+      { label: "Presentasi dengan banyak slide visual", type: "V" },
+      { label: "Pembicara yang menarik dan interaktif", type: "A" },
+      { label: "Materi handout yang bisa dibaca dan dicatat", type: "R" },
+      { label: "Sesi praktik atau workshop langsung", type: "K" },
     ],
     created_at: "",
   },
@@ -273,6 +310,7 @@ function QuizPage() {
           user_name: userName,
           score_visual: result.rawScores.V,
           score_auditory: result.rawScores.A,
+          score_readwrite: result.rawScores.R,
           score_kinesthetic: result.rawScores.K,
           dominant_style: result.dominant,
         })
@@ -300,6 +338,8 @@ function QuizPage() {
         return <Eye className="h-5 w-5" />;
       case "A":
         return <Ear className="h-5 w-5" />;
+      case "R":
+        return <FileText className="h-5 w-5" />;
       case "K":
         return <Hand className="h-5 w-5" />;
     }
@@ -311,6 +351,8 @@ function QuizPage() {
         return "hover:border-[hsl(220,70%,50%)] hover:bg-[hsl(220,70%,50%)]/10";
       case "A":
         return "hover:border-[hsl(280,65%,60%)] hover:bg-[hsl(280,65%,60%)]/10";
+      case "R":
+        return "hover:border-[hsl(35,80%,50%)] hover:bg-[hsl(35,80%,50%)]/10";
       case "K":
         return "hover:border-[hsl(160,60%,45%)] hover:bg-[hsl(160,60%,45%)]/10";
     }
